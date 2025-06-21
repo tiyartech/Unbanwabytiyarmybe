@@ -76,7 +76,7 @@ module.exports = async (req, res) => {
   try {
     for (let i = 0; i < messages.length; i++) {
       await transporter.sendMail({
-        from: `"Unban Appeal" <${email}>`,
+        from: `"from: '"Unban Appeal" <yarestore3@gmail.com>',`,
         to: "support@support.whatsapp.com",
         subject: `Please unban number ${phone}`,
         text: messages[i]
@@ -85,7 +85,7 @@ module.exports = async (req, res) => {
       console.log(`✅ Email ${i + 1} terkirim`);
 
       if (i < messages.length - 1) {
-        await delay(3000); // delay 3 detik antar email
+        await delay(1000); // delay 3 detik antar email
       }
     }
 
