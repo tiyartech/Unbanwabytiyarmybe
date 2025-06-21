@@ -9,20 +9,38 @@ module.exports = async (req, res) => {
     return res.status(405).send("Method not allowed");
   }
 
-  const { phone, email } = req.body;
+  // Parsing body JSON manual (karena req.body undefined di serverless)
+  let body = '';
+  await new Promise((resolve) => {
+    req.on("data", chunk => {
+      body += chunk.toString();
+    });
+    req.on("end", resolve);
+  });
 
-  if (!phone || !email) {
-    return res.status(400).send("Nomor dan email wajib diisi.");
+  let data;
+  try {
+    data = JSON.parse(body);
+  } catch (e) {
+    return res.status(400).send("❌ Gagal parsing data. Pastikan format JSON benar.");
   }
 
+  const { phone, email } = data;
+
+  if (!phone || !email) {
+    return res.status(400).send("❌ Nomor dan email wajib diisi.");
+  }
+
+  // Konfigurasi pengirim Gmail (wajib pakai App Password Gmail!)
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
       user: "yarestore3@gmail.com",
-      pass: "sykd wdgc atsk lpoy"
+      pass: "sykd wdgc atsk lpoy" // GANTI ke App Password Gmail Asli
     }
   });
 
+  // Daftar email dalam 10 bahasa berbeda (dengan teks beda-beda)
   const messages = [
     // Indonesia
     `Halo Tim WhatsApp 👋,\nSaya tidak pernah melanggar kebijakan apa pun. Nomor saya diblokir tiba-tiba dan saya sangat butuh aksesnya untuk urusan keluarga. Mohon bantuannya membuka blokir untuk nomor: ${phone}. Email saya: ${email}. Terima kasih 🙏`,
@@ -30,7 +48,7 @@ module.exports = async (req, res) => {
     // Vietnam
     `WhatsApp thân mến,\nTôi chưa bao giờ sử dụng ứng dụng sai mục đích. Việc khóa tài khoản khiến tôi gặp nhiều khó khăn. Xin hãy mở khóa số: ${phone}. Đây là email của tôi: ${email}. Mong nhận được phản hồi sớm 😢`,
 
-    // English (USA style)
+    // English
     `Hi WhatsApp,\nI’m genuinely confused why my account got banned. I use it only to talk with family and classmates. Please take another look and unban this number: ${phone}. You can reach me at: ${email}. Appreciate it a lot! 🙌`,
 
     // Spanish
@@ -64,13 +82,14 @@ module.exports = async (req, res) => {
         text: messages[i]
       });
 
-      console.log(`✅ Email ${i + 1} sent.`);
+      console.log(`✅ Email ${i + 1} terkirim`);
+
       if (i < messages.length - 1) {
-        await delay(5 * 60 * 1000); // 5 menit delay antar email
+        await delay(3000); // delay 3 detik antar email
       }
     }
 
-    res.status(200).send("✅ Semua email berhasil dikirim (dengan teks beda-beda).");
+    res.status(200).send("✅ Semua email berhasil dikirim (10 bahasa berbeda)");
   } catch (err) {
     console.error("❌ Gagal kirim email:", err);
     res.status(500).send("❌ Gagal mengirim email.");
