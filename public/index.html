@@ -3,63 +3,143 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Unban WhatsApp - Tiyarmybe</title>
+  <title>Unban WhatsApp – Tiyarmybe</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
+    * { box-sizing: border-box }
     body {
       margin: 0;
-      padding: 0;
-      font-family: monospace;
-      background: url('https://files.catbox.moe/35pcw1') no-repeat center center fixed;
-      background-size: cover;
+      font-family: 'Fira Code', monospace;
+      background: url('https://files.catbox.moe/35pcw1') no-repeat center/cover fixed;
       color: #00ff99;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      backdrop-filter: brightness(0.4);
+      min-height: 100vh;
+      overflow: hidden;
     }
+
+    .matrix {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 70%);
+    }
+    .matrix:before {
+      content: '01'.repeat(400);
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      line-height: 12px;
+      font-size: 12px;
+      color: rgba(0,255,153,0.15);
+      animation: scroll 14s linear infinite;
+      white-space: pre-wrap;
+    }
+    @keyframes scroll { from {transform: translateY(-100%)} to {transform: translateY(0%)} }
 
     h1 {
-      font-size: 2rem;
-      text-align: center;
+      font-size: 2.2rem;
       margin-bottom: 20px;
       animation: glow 2s infinite alternate;
+      text-align: center;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #0f0, 0 0 10px #0f0 }
+      to { text-shadow: 0 0 15px #0f0, 0 0 30px #0f0 }
     }
 
-    p {
+    form {
+      backdrop-filter: blur(6px);
+      background: rgba(0,0,0,0.6);
+      padding: 25px 30px;
+      border-radius: 14px;
+      max-width: 340px;
+      width: 90%;
+      box-shadow: 0 0 10px #00ff99 inset, 0 0 8px #00ff99;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 10px 12px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 8px;
+      font-family: inherit;
       font-size: 1rem;
+      outline: none;
+    }
+
+    input {
+      background: #111;
+      color: #0f0;
+    }
+
+    button {
+      margin-top: 20px;
+      background: #00c86b;
+      color: #fff;
+      cursor: pointer;
+      transition: background .3s;
+    }
+
+    button:hover { background: #00e67a }
+
+    #status {
+      margin-top: 16px;
+      font-weight: bold;
       text-align: center;
-      max-width: 600px;
-      margin: 0 auto;
-      color: #dddddd;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 10px 20px;
-      border-radius: 12px;
+      color: #fff;
     }
 
     .footer {
-      position: absolute;
-      bottom: 10px;
-      font-size: 0.8rem;
-      color: #aaaaaa;
-    }
-
-    @keyframes glow {
-      from {
-        text-shadow: 0 0 5px #00ff99, 0 0 10px #00ff99;
-      }
-      to {
-        text-shadow: 0 0 15px #00ff99, 0 0 30px #00ff99;
-      }
+      position: fixed;
+      bottom: 8px;
+      font-size: 0.75rem;
+      color: #8f8;
+      text-shadow: 0 0 6px #0f0;
     }
   </style>
 </head>
 <body>
+  <div class="matrix"></div>
+
   <h1>🛡️ Unban WhatsApp Tool</h1>
-  <p>Proyek ini dibuat oleh <strong>Tiyarmybe</strong> untuk bantu kamu kirim permohonan unban ke WhatsApp secara otomatis dalam berbagai bahasa dan kata yang berbeda-beda.</p>
-  <div class="footer">
-    &copy; 2025 Tiyarmybe.Studio
-  </div>
+
+  <form id="unbanForm">
+    <input type="text" id="phone" value="+628xxxxxxxxxx" required />
+    <input type="email" id="email" value="contoh@email.com" required />
+    <button type="submit">Kirim Permohonan</button>
+    <p id="status"></p>
+  </form>
+
+  <div class="footer">&copy; 2025 Tiyarmybe.Studio</div>
+
+  <script>
+    const form = document.getElementById('unbanForm');
+    const statusEl = document.getElementById('status');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      statusEl.textContent = '⏳ Mengirim...';
+
+      const body = {
+        phone: document.getElementById('phone').value.trim(),
+        email: document.getElementById('email').value.trim()
+      };
+
+      try {
+        const res = await fetch('/api/unban', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        statusEl.textContent = await res.text();
+      } catch (err) {
+        statusEl.textContent = '❌ Gagal koneksi ke server';
+      }
+    });
+  </script>
 </body>
 </html>
