@@ -36,7 +36,7 @@ module.exports = async (req, res) => {
     service: "gmail",
     auth: {
       user: "yarestore3@gmail.com",
-      pass: "sykd wdgc atsk lpoy" // GANTI ke App Password Gmail Asli
+      pass: "geuagahenrjbhpaj" // GANTI ke App Password Gmail Asli
     }
   });
 
