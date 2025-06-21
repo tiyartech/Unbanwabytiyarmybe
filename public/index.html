@@ -19,7 +19,6 @@
       min-height: 100vh;
       overflow: hidden;
     }
-
     .matrix {
       position: fixed;
       inset: 0;
@@ -38,7 +37,6 @@
       white-space: pre-wrap;
     }
     @keyframes scroll { from {transform: translateY(-100%)} to {transform: translateY(0%)} }
-
     h1 {
       font-size: 2.2rem;
       margin-bottom: 20px;
@@ -49,7 +47,6 @@
       from { text-shadow: 0 0 5px #0f0, 0 0 10px #0f0 }
       to { text-shadow: 0 0 15px #0f0, 0 0 30px #0f0 }
     }
-
     form {
       backdrop-filter: blur(6px);
       background: rgba(0,0,0,0.6);
@@ -59,7 +56,6 @@
       width: 90%;
       box-shadow: 0 0 10px #00ff99 inset, 0 0 8px #00ff99;
     }
-
     input, button {
       width: 100%;
       padding: 10px 12px;
@@ -70,12 +66,10 @@
       font-size: 1rem;
       outline: none;
     }
-
     input {
       background: #111;
       color: #0f0;
     }
-
     button {
       margin-top: 20px;
       background: #00c86b;
@@ -83,16 +77,13 @@
       cursor: pointer;
       transition: background .3s;
     }
-
     button:hover { background: #00e67a }
-
     #status {
       margin-top: 16px;
       font-weight: bold;
       text-align: center;
       color: #fff;
     }
-
     .footer {
       position: fixed;
       bottom: 8px;
@@ -106,14 +97,12 @@
   <div class="matrix"></div>
 
   <h1>🛡️ Unban WhatsApp Tool</h1>
-
   <form id="unbanForm">
     <input type="text" id="phone" value="+628xxxxxxxxxx" required />
     <input type="email" id="email" value="contoh@email.com" required />
     <button type="submit">Kirim Permohonan</button>
     <p id="status"></p>
   </form>
-
   <div class="footer">&copy; 2025 Tiyarmybe.Studio</div>
 
   <script>
@@ -129,14 +118,20 @@
         email: document.getElementById('email').value.trim()
       };
 
+      console.log('📤 Data dikirim:', body); // Log data input
+
       try {
         const res = await fetch('/api/unban', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body)
         });
-        statusEl.textContent = await res.text();
+
+        const text = await res.text();
+        console.log('📩 Respons:', text); // Log response dari API
+        statusEl.textContent = text;
       } catch (err) {
+        console.error('❌ Gagal koneksi:', err); // Log error jaringan
         statusEl.textContent = '❌ Gagal koneksi ke server';
       }
     });
