@@ -94,6 +94,18 @@
   </style>
 </head>
 <body>
+  <script>
+    // 🔒 Kode akses sementara (ubah sesuai keinginan)
+    const kodeAkses = prompt("🔐 Masukkan kode akses:");
+    if (kodeAkses !== "tiyarmybe") {
+      document.body.innerHTML = `
+        <h1 style="color: red; text-align: center; margin-top: 20%;">
+          🚫 Akses Ditolak<br>Kode salah atau tidak diizinkan.
+        </h1>`;
+      throw new Error("Akses ditolak karena kode salah.");
+    }
+  </script>
+
   <div class="matrix"></div>
 
   <h1>🛡️ Unban WhatsApp Tool</h1>
