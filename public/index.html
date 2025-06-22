@@ -74,10 +74,7 @@
       font-size: 1rem;
       outline: none;
     }
-    input {
-      background: #111;
-      color: #0f0;
-    }
+    input { background: #111; color: #0f0 }
     button {
       margin-top: 20px;
       background: #00c86b;
@@ -120,7 +117,7 @@
   <script>
     const privateKey = prompt("🔐 Masukkan private key:");
     if (privateKey !== "tiyarmybe") {
-      document.body.innerHTML = `<div class="denied">🚫 Akses Ditolak<br>Private key salah atau belum bayar</div>`;
+      document.body.innerHTML = `<div class="matrix"></div><div class="denied">🚫 Akses Ditolak<br>Private key salah atau belum bayar</div>`;
       throw new Error("Private key salah");
     }
   </script>
