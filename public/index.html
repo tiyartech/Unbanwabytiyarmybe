@@ -117,60 +117,60 @@
   <script>
     const privateKey = prompt("🔐 Masukkan private key:");
     if (privateKey !== "tiyarmybe") {
-      document.body.innerHTML = `<div class="matrix"></div><div class="denied">🚫 Akses Ditolak<br>Private key salah atau belum bayar</div>`;
-      throw new Error("Private key salah");
+      document.body.innerHTML = `
+        <div class="matrix"></div>
+        <div class="denied">🚫 Akses Ditolak<br>Private key salah atau belum bayar</div>
+        <div class="footer">&copy; 2025 Tiyarmybe.Studio</div>
+      `;
+    } else {
+      document.body.innerHTML = `
+        <div class="matrix"></div>
+        <h1>🛡️ Unban WhatsApp Tool</h1>
+        <div class="note">
+          ✅ Spam dikirim: 10 bahasa / Gmail<br/>
+          📧 Pilih Gmail pengirim:
+          <div class="checkboxes">
+            <label><input type="checkbox" id="gmail1" checked /> Gmail 1</label>
+            <label><input type="checkbox" id="gmail2" /> Gmail 2</label>
+          </div>
+        </div>
+        <form id="unbanForm">
+          <input type="text" id="phone" placeholder="+628xxxxxxxxxx" required />
+          <input type="email" id="email" placeholder="your@email.com" required />
+          <button type="submit">Kirim Permohonan</button>
+          <p id="status"></p>
+        </form>
+        <div class="footer">&copy; 2025 Tiyarmybe.Studio</div>
+      `;
+
+      const form = document.getElementById('unbanForm');
+      const statusEl = document.getElementById('status');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        statusEl.textContent = '⏳ Mengirim...';
+
+        const body = {
+          phone: document.getElementById('phone').value.trim(),
+          email: document.getElementById('email').value.trim(),
+          g1: document.getElementById('gmail1').checked,
+          g2: document.getElementById('gmail2').checked
+        };
+
+        try {
+          const res = await fetch('/api/unban', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          });
+
+          const text = await res.text();
+          statusEl.textContent = text;
+        } catch (err) {
+          statusEl.textContent = '❌ Gagal koneksi ke server';
+        }
+      });
     }
-  </script>
-
-  <div class="matrix"></div>
-
-  <h1>🛡️ Unban WhatsApp Tool</h1>
-  <div class="note">
-    ✅ Spam dikirim: 10 bahasa / Gmail<br/>
-    📧 Pilih Gmail pengirim:
-    <div class="checkboxes">
-      <label><input type="checkbox" id="gmail1" checked /> Gmail 1</label>
-      <label><input type="checkbox" id="gmail2" /> Gmail 2</label>
-    </div>
-  </div>
-
-  <form id="unbanForm">
-    <input type="text" id="phone" placeholder="+628xxxxxxxxxx" required />
-    <input type="email" id="email" placeholder="your@email.com" required />
-    <button type="submit">Kirim Permohonan</button>
-    <p id="status"></p>
-  </form>
-
-  <div class="footer">&copy; 2025 Tiyarmybe.Studio</div>
-
-  <script>
-    const form = document.getElementById('unbanForm');
-    const statusEl = document.getElementById('status');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      statusEl.textContent = '⏳ Mengirim...';
-
-      const body = {
-        phone: document.getElementById('phone').value.trim(),
-        email: document.getElementById('email').value.trim(),
-        g1: document.getElementById('gmail1').checked,
-        g2: document.getElementById('gmail2').checked
-      };
-
-      try {
-        const res = await fetch('/api/unban', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body)
-        });
-
-        const text = await res.text();
-        statusEl.textContent = text;
-      } catch (err) {
-        statusEl.textContent = '❌ Gagal koneksi ke server';
-      }
-    });
   </script>
 </body>
 </html>
