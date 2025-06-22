@@ -19,6 +19,14 @@
       min-height: 100vh;
       overflow: hidden;
     }
+    .denied {
+      font-size: 1.6rem;
+      text-align: center;
+      background: rgba(0,0,0,0.6);
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #00ff99;
+    }
     .matrix {
       position: fixed;
       inset: 0;
@@ -112,8 +120,7 @@
   <script>
     const privateKey = prompt("🔐 Masukkan private key:");
     if (privateKey !== "tiyarmybe") {
-      document.body.innerHTML = ""; // Kosongkan semua konten
-      document.body.style.background = "#000"; // Hitam polos
+      document.body.innerHTML = `<div class="denied">🚫 Akses Ditolak<br>Private key salah atau belum bayar</div>`;
       throw new Error("Private key salah");
     }
   </script>
