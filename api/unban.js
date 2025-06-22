@@ -34,38 +34,14 @@ module.exports = async (req, res) => {
   if (g1) {
     gmailList.push({
       user: "akun9nuyul77@gmail.com",
-      pass: "iqmccaymlhyudtrs",
-      messages: [
-        `Halo Tim WhatsApp 👋,\nSaya tidak pernah melanggar kebijakan apa pun. Nomor saya diblokir tiba-tiba dan saya sangat butuh aksesnya untuk urusan keluarga. Mohon bantuannya membuka blokir untuk nomor: ${phone}. Email saya: ${email}. Terima kasih 🙏`,
-        `WhatsApp thân mến,\nTôi chưa bao giờ sử dụng ứng dụng sai mục đích. Việc khóa tài khoản khiến tôi gặp nhiều khó khăn. Xin hãy mở khóa số: ${phone}. Đây là email của tôi: ${email}. Mong nhận được phản hồi sớm 😢`,
-        `Hi WhatsApp,\nI’m genuinely confused why my account got banned. I use it only to talk with family and classmates. Please take another look and unban this number: ${phone}. You can reach me at: ${email}. Appreciate it a lot! 🙌`,
-        `Estimado equipo de WhatsApp,\nSiempre utilicé su plataforma con respeto. No entiendo la razón del bloqueo. Les ruego revisar el número: ${phone}. Mi correo: ${email}. Gracias de corazón ❤️`,
-        `WhatsAppサポートへ\n私は規則を守って使ってきました。突然アカウントが凍結されて困惑しています。番号：${phone}、メール：${email}。ご対応をお願いします。`,
-        `Bonjour WhatsApp,\nJe n'ai jamais enfreint les règles et mon compte a été bloqué sans raison. Merci de bien vouloir revoir mon dossier. Mon numéro : ${phone}, Email : ${email}. Merci pour votre compréhension.`,
-        `Hallo WhatsApp-Team,\nMein Konto wurde ohne Vorwarnung gesperrt. Ich habe die App nur privat genutzt. Bitte prüfen Sie den Fall erneut: ${phone}. Kontakt: ${email}. Vielen Dank im Voraus! 🙏`,
-        `Здравствуйте, служба поддержки WhatsApp,\nМой аккаунт заблокировали, и я не понимаю, почему. Пожалуйста, помогите восстановить номер: ${phone}. Почта: ${email}. Буду признателен.`,
-        `سلام تیم واتساپ،\nاکانت من ناگهانی بسته شده و من هیچ خلافی نکردم. لطفاً شماره ${phone} را بررسی کرده و رفع مسدودی کنید. ایمیل من: ${email}. سپاسگزارم 🙏`,
-        `สวัสดีทีมงาน WhatsApp\nบัญชีของฉันถูกแบนโดยไม่ทราบสาเหตุ ฉันใช้งานตามปกติเท่านั้น รบกวนตรวจสอบหมายเลข: ${phone} อีเมลของฉันคือ: ${email} ขอบคุณมากค่ะ 🥺`
-      ]
+      pass: "iqmccaymlhyudtrs"
     });
   }
 
   if (g2) {
     gmailList.push({
       user: "honorofnuyul2@gmail.com",
-      pass: "vgsrfevyxdvskscw",
-      messages: [
-        `Kepada Tim WhatsApp,\nNomor ${phone} saya diblokir tiba-tiba. Saya tidak melakukan pelanggaran apa pun. Mohon dipertimbangkan kembali. Email saya: ${email}.`,
-        `WhatsApp thân yêu,\nTài khoản số ${phone} của tôi bị khóa bất ngờ. Xin vui lòng kiểm tra lại. Liên hệ qua email: ${email}`,
-        `Hi WhatsApp Team,\nI believe there has been a mistake. My number ${phone} was banned without reason. Please review. Contact: ${email}`,
-        `Estimado equipo de soporte,\nPor favor revisen el número ${phone}. No he hecho nada indebido. Este es mi correo: ${email}.`,
-        `WhatsAppサポートチームへ,\n突然、アカウント（${phone}）が使えなくなりました。お忙しいところ恐縮ですが、ご確認お願いします。Email: ${email}`,
-        `Bonjour WhatsApp,\nJe vous écris car mon numéro ${phone} a été désactivé sans raison. Veuillez le réactiver. Email: ${email}`,
-        `Hallo liebes WhatsApp-Team,\nMein Konto mit der Nummer ${phone} wurde fälschlicherweise gesperrt. Bitte um Überprüfung. Kontakt: ${email}`,
-        `سلام واتساپ عزیز\nلطفا مسدودی شماره من ${phone} را بررسی کنید. من هیچ خلافی انجام ندادم. ایمیل من: ${email}`,
-        `เรียน WhatsApp,\nเบอร์ ${phone} ของฉันถูกบล็อก ทั้งที่ไม่ได้ทำอะไรผิด กรุณาช่วยตรวจสอบด้วยค่ะ อีเมล: ${email}`,
-        `Dear WhatsApp team,\nI need urgent access to number ${phone}. Please help restore it as I rely on it for daily work. Email: ${email}`
-      ]
+      pass: "vgsrfevyxdvskscw"
     });
   }
 
@@ -73,30 +49,161 @@ module.exports = async (req, res) => {
     return res.status(400).send("❌ Minimal satu Gmail harus dipilih.");
   }
 
+  const messagesA = [
+`Halo Tim WhatsApp 👋,\n
+Saya pengguna aktif WhatsApp sejak lama.\n
+Nomor saya diblokir mendadak tanpa alasan jelas.\n
+Mohon pertimbangannya untuk membuka blokir 🙏.\n
+Nomor saya: ${phone}\n
+Email saya: ${email}\n
+Terima kasih 🌟`,
+
+`Hi WhatsApp 💌,\n
+My number was suspended suddenly 🆘.\n
+I did not violate any policy.\n
+Please review and unblock this number: ${phone}.\n
+You may contact me via ${email}. Thank you so much 🙏`,
+
+`Xin chào đội ngũ WhatsApp 📞,\n
+Tài khoản của tôi bị khóa mà không rõ lý do.\n
+Tôi cần liên lạc công việc và gia đình.\n
+Số điện thoại: ${phone}\n
+Email: ${email}\n
+Xin hãy giúp tôi 😭`,
+
+`WhatsAppサポートチームへ 🙇‍♂️,\n
+私は常にルールに従って使ってきました。\n
+アカウントが突然凍結されて困っています。\n
+番号: ${phone}\n
+メール: ${email}\n
+どうかよろしくお願いします。🙏`,
+
+`Bonjour l'équipe WhatsApp 🇫🇷,\n
+Je suis un utilisateur régulier 📱.\n
+Mon compte a été suspendu sans avertissement 😞.\n
+Mon numéro : ${phone}\n
+Email : ${email}. Merci infiniment 🙌`,
+
+`Hallo WhatsApp-Team 🇩🇪,\n
+Mein Konto wurde ohne Grund gesperrt ❌.\n
+Ich nutze WhatsApp nur privat.\n
+Bitte prüfen Sie: ${phone}\n
+Kontakt: ${email}. Dankeschön 🙏`,
+
+`Estimado equipo de WhatsApp 🇪🇸,\n
+Mi cuenta fue bloqueada sin explicación 😔.\n
+Utilizo la app para hablar con familia.\n
+Número: ${phone}\n
+Correo: ${email}\n
+Por favor, ayúdenme 🙏`,
+
+`سلام تیم واتساپ 🇮🇷\n
+اکانت من ناگهانی مسدود شده است.\n
+لطفاً شماره من را بررسی کنید: ${phone}\n
+ایمیل: ${email}.\n
+خیلی ممنون 🌹`,
+
+`สวัสดีทีมงาน WhatsApp 🇹🇭\n
+บัญชีของฉันถูกบล็อกทันที ❌\n
+โปรดตรวจสอบหมายเลข: ${phone}\n
+อีเมลของฉันคือ: ${email}\n
+ขอบคุณมาก ๆ ค่ะ 🙇‍♀️`,
+
+`WhatsApp Support 🌐,\n
+I only use this app for family and school.\n
+Please unban my number: ${phone} 🙏\n
+You can reach me at: ${email}\n
+God bless 🙏`
+  ];
+
+  const messagesB = [
+`Hi WhatsApp team,\n
+I found my account banned this morning 📴.\n
+I haven’t done anything wrong.\n
+Please check number: ${phone}\n
+Email: ${email}\n
+Thanks 🙏`,
+
+`Xin chào WhatsApp,\n
+Tôi chỉ dùng tài khoản này cho gia đình.\n
+Không hề có hành động vi phạm.\n
+Số: ${phone}, Email: ${email}\n
+Mong được hỗ trợ 🌟`,
+
+`Hola WhatsApp,\n
+Nunca violé ninguna norma ❗\n
+Por favor desbloqueen mi cuenta: ${phone}\n
+Correo: ${email}\n
+Gracias 🙇`,
+
+`Halo WhatsApp,\n
+Nomor saya diblokir tiba-tiba 🥲\n
+Padahal saya tidak melanggar aturan apa pun.\n
+Mohon bantuan untuk membuka blokir.\n
+Nomor: ${phone}\n
+Email: ${email}`,
+
+`Bonjour WhatsApp,\n
+Je ne comprends pas pourquoi mon compte est bloqué 😢\n
+Mon numéro est: ${phone}\n
+Email: ${email}\n
+Merci de revoir la situation 🙏`,
+
+`Hello WA Support 📱,\n
+This is my only number used for family chat.\n
+Please check it again: ${phone}\n
+Email: ${email}. Appreciate your help 🙌`,
+
+`Xin chào,\n
+Số của tôi đã bị khóa đột ngột 😭\n
+Tôi không làm gì sai cả.\n
+Xin hãy kiểm tra lại: ${phone}\n
+Email: ${email}`,
+
+`WhatsAppサポートへ 📞\n
+私の番号は${phone}です。\n
+メールは${email}。\n
+回復していただけると助かります 🙇‍♂️`,
+
+`Hallo Team WhatsApp,\n
+Mein WhatsApp wurde geblockt 🛑\n
+Ich brauche es dringend zum Kommunizieren.\n
+Nummer: ${phone}, Mail: ${email}`,
+
+`Salam WhatsApp,\n
+Saya tidak paham kenapa nomor saya diblokir ❓\n
+Tolong tinjau ulang nomor ${phone}.\n
+Email saya: ${email}.\n
+Terima kasih sebesar-besarnya 🙏`
+  ];
+
   try {
     for (let g = 0; g < gmailList.length; g++) {
+      const currentGmail = gmailList[g];
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: gmailList[g].user,
-          pass: gmailList[g].pass
+          user: currentGmail.user,
+          pass: currentGmail.pass
         }
       });
 
-      for (let i = 0; i < gmailList[g].messages.length; i++) {
+      const currentMessages = g === 0 ? messagesA : messagesB;
+
+      for (let i = 0; i < currentMessages.length; i++) {
         await transporter.sendMail({
-          from: `"Unban Appeal" <${gmailList[g].user}>`,
+          from: `"Unban Appeal" <${currentGmail.user}>`,
           to: "support@support.whatsapp.com",
           subject: `Please unban number ${phone}`,
-          text: gmailList[g].messages[i]
+          text: currentMessages[i]
         });
 
         console.log(`✅ Gmail ${g + 1} - Email ${i + 1} terkirim`);
-        if (i < gmailList[g].messages.length - 1) await delay(1500);
+        if (i < currentMessages.length - 1) await delay(1500);
       }
     }
 
-    res.status(200).send(`✅ Email berhasil dikirim (${gmailList.length * 10} total email)`);
+    res.status(200).send(`✅ ${gmailList.length * 10} email berhasil dikirim (${gmailList.length} akun Gmail)`);
   } catch (err) {
     console.error("❌ Gagal kirim email:", err);
     res.status(500).send("❌ Gagal mengirim email.");
