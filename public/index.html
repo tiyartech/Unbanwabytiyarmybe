@@ -18,14 +18,7 @@
       justify-content: center;
       min-height: 100vh;
       overflow: hidden;
-    }
-    .denied {
-      font-size: 1.6rem;
       text-align: center;
-      background: rgba(0,0,0,0.6);
-      padding: 20px 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px #00ff99;
     }
     .matrix {
       position: fixed;
@@ -45,11 +38,18 @@
       white-space: pre-wrap;
     }
     @keyframes scroll { from {transform: translateY(-100%)} to {transform: translateY(0%)} }
+    .denied {
+      font-size: 1.6rem;
+      background: rgba(0,0,0,0.6);
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #00ff99;
+      z-index: 1;
+    }
     h1 {
       font-size: 2.2rem;
       margin-bottom: 12px;
       animation: glow 2s infinite alternate;
-      text-align: center;
     }
     @keyframes glow {
       from { text-shadow: 0 0 5px #0f0, 0 0 10px #0f0 }
@@ -74,7 +74,10 @@
       font-size: 1rem;
       outline: none;
     }
-    input { background: #111; color: #0f0 }
+    input {
+      background: #111;
+      color: #0f0;
+    }
     button {
       margin-top: 20px;
       background: #00c86b;
@@ -86,21 +89,12 @@
     #status {
       margin-top: 16px;
       font-weight: bold;
-      text-align: center;
       color: #fff;
-    }
-    .footer {
-      position: fixed;
-      bottom: 8px;
-      font-size: 0.75rem;
-      color: #8f8;
-      text-shadow: 0 0 6px #0f0;
     }
     .note {
       margin-top: 10px;
       font-size: 0.85rem;
       color: #0f0;
-      text-align: center;
     }
     .checkboxes {
       display: flex;
@@ -111,20 +105,31 @@
     .checkboxes label {
       font-size: 0.85rem;
     }
+    .footer {
+      position: fixed;
+      bottom: 8px;
+      font-size: 0.75rem;
+      color: #8f8;
+      text-shadow: 0 0 6px #0f0;
+    }
   </style>
 </head>
 <body>
+  <div class="matrix"></div>
+
   <script>
     const privateKey = prompt("🔐 Masukkan private key:");
     if (privateKey !== "tiyarmybe") {
-      document.body.innerHTML = `
-        <div class="matrix"></div>
-        <div class="denied">🚫 Akses Ditolak<br>Private key salah atau belum bayar</div>
-        <div class="footer">&copy; 2025 Tiyarmybe.Studio</div>
-      `;
+      const deniedDiv = document.createElement("div");
+      deniedDiv.className = "denied";
+      deniedDiv.innerHTML = "🚫 Akses Ditolak<br>Private key salah atau belum bayar";
+      document.body.appendChild(deniedDiv);
+      const footer = document.createElement("div");
+      footer.className = "footer";
+      footer.innerHTML = "&copy; 2025 Tiyarmybe.Studio";
+      document.body.appendChild(footer);
     } else {
-      document.body.innerHTML = `
-        <div class="matrix"></div>
+      document.body.innerHTML += `
         <h1>🛡️ Unban WhatsApp Tool</h1>
         <div class="note">
           ✅ Spam dikirim: 10 bahasa / Gmail<br/>
