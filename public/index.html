@@ -110,7 +110,7 @@
 </head>
 <body>
   <script>
-    const kodeAkses = prompt("🔐 Masukkan kode akses:");
+    const privateKey = prompt("🔐 Masukkan kode akses:");
     if (kodeAkses !== "tiyarmybe") {
       document.body.innerHTML = `<h1 style="color: #0f0; text-align: center; margin-top: 20%;">🚫 Akses Ditolak<br>Kode salah atau belum bayar 🤖</h1>`;
       throw new Error("Akses ditolak karena kode salah.");
