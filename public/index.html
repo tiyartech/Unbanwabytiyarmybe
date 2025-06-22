@@ -97,17 +97,22 @@
       color: #0f0;
       text-align: center;
     }
+    .checkboxes {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 8px;
+    }
+    .checkboxes label {
+      font-size: 0.85rem;
+    }
   </style>
 </head>
 <body>
   <script>
-    // 🔒 Kode akses sementara (ubah sesuai kebutuhan)
     const kodeAkses = prompt("🔐 Masukkan kode akses:");
     if (kodeAkses !== "tiyarmybe") {
-      document.body.innerHTML = `
-        <h1 style="color: #0f0; text-align: center; margin-top: 20%;">
-          🚫 Akses Ditolak<br>Kode salah atau belum bayar 🤖
-        </h1>`;
+      document.body.innerHTML = `<h1 style="color: #0f0; text-align: center; margin-top: 20%;">🚫 Akses Ditolak<br>Kode salah atau belum bayar 🤖</h1>`;
       throw new Error("Akses ditolak karena kode salah.");
     }
   </script>
@@ -116,11 +121,12 @@
 
   <h1>🛡️ Unban WhatsApp Tool</h1>
   <div class="note">
-    ✅ Spam dikirim: 10 bahasa<br/>
-    📧 Gmail digunakan:
-    <label><input type="checkbox" checked disabled /> Gmail 1</label>
-    <label><input type="checkbox" disabled /> Gmail 2</label><br/>
-    (Jika centang 2, maka pakai 2 Gmail bergantian)
+    ✅ Spam dikirim: 10 bahasa / Gmail<br/>
+    📧 Pilih Gmail pengirim:
+    <div class="checkboxes">
+      <label><input type="checkbox" id="gmail1" checked /> Gmail 1</label>
+      <label><input type="checkbox" id="gmail2" /> Gmail 2</label>
+    </div>
   </div>
 
   <form id="unbanForm">
@@ -142,10 +148,10 @@
 
       const body = {
         phone: document.getElementById('phone').value.trim(),
-        email: document.getElementById('email').value.trim()
+        email: document.getElementById('email').value.trim(),
+        g1: document.getElementById('gmail1').checked,
+        g2: document.getElementById('gmail2').checked
       };
-
-      console.log('📤 Data dikirim:', body);
 
       try {
         const res = await fetch('/api/unban', {
@@ -155,10 +161,8 @@
         });
 
         const text = await res.text();
-        console.log('📩 Respons:', text);
         statusEl.textContent = text;
       } catch (err) {
-        console.error('❌ Gagal koneksi:', err);
         statusEl.textContent = '❌ Gagal koneksi ke server';
       }
     });

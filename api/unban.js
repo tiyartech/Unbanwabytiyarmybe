@@ -24,21 +24,30 @@ module.exports = async (req, res) => {
     return res.status(400).send("❌ Gagal parsing data.");
   }
 
-  const { phone, email } = data;
+  const { phone, email, g1, g2 } = data;
   if (!phone || !email) {
     return res.status(400).send("❌ Nomor dan email wajib diisi.");
   }
 
-  const gmailList = [
-    {
+  const gmailList = [];
+
+  if (g1) {
+    gmailList.push({
       user: "akun9nuyul77@gmail.com",
       pass: "iqmccaymlhyudtrs"
-    },
-    {
+    });
+  }
+
+  if (g2) {
+    gmailList.push({
       user: "honorofnuyul2@gmail.com",
       pass: "vgsrfevyxdvskscw"
-    }
-  ];
+    });
+  }
+
+  if (gmailList.length === 0) {
+    return res.status(400).send("❌ Minimal satu Gmail harus dipilih.");
+  }
 
   const messages = [
     `Halo Tim WhatsApp 👋,\nSaya tidak pernah melanggar kebijakan apa pun. Nomor saya diblokir tiba-tiba dan saya sangat butuh aksesnya untuk urusan keluarga. Mohon bantuannya membuka blokir untuk nomor: ${phone}. Email saya: ${email}. Terima kasih 🙏`,
@@ -76,7 +85,7 @@ module.exports = async (req, res) => {
       }
     }
 
-    res.status(200).send("✅ Semua email berhasil dikirim (20 email via 2 akun Gmail)");
+    res.status(200).send(`✅ Email berhasil dikirim (${gmailList.length * messages.length} total email)`);
   } catch (err) {
     console.error("❌ Gagal kirim email:", err);
     res.status(500).send("❌ Gagal mengirim email.");
